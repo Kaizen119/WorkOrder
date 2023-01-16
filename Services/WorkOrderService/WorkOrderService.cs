@@ -52,6 +52,26 @@ namespace server.Services.WorkOrderService{
         return serviceResponse;
         }
 
+        public async Task<ServiceResponse<List<GetWorkOrderResponseDto>>> DeleteWorkOrder(int id)
+        {
+            var serviceResponse = new ServiceResponse<List<GetWorkOrderResponseDto>>();
+            try{
+            var workOrder = workOrders.FirstOrDefault(wo => wo.WONum == id);
+            if(workOrder is null)
+                throw new Exception($"Work Order with Work Order Number '{id}' not found.");
+            
+            workOrders.Remove(workOrder);
+
+            serviceResponse.Data = workOrders.Select(wo => _mapper.Map<GetWorkOrderResponseDto>(wo)).ToList();
+
+            }catch (Exception ex) {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+
+        }
+
         public async Task<ServiceResponse<List<GetWorkOrderResponseDto>>> GetAllWorkOrders()
         {
             var serviceResponse = new ServiceResponse<List<GetWorkOrderResponseDto>>();
