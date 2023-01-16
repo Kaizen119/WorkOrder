@@ -11,5 +11,6 @@ namespace server.Services.WorkOrderService{
         Task<ServiceResponse<GetWorkOrderResponseDto>> GetWorkOrderById(int id);
         Task<ServiceResponse<List<GetWorkOrderResponseDto>>> AddWorkOrder(AddWorkOrderRequestDto newWorkOrder);
         Task<ServiceResponse<GetWorkOrderResponseDto>> UpdateWorkOrder(UpdateWorkOrderRequestDto updatedWorkOrder);
+        Task<ServiceResponse<List<GetWorkOrderResponseDto>>> DeleteWorkOrder(int id);
     }
 }

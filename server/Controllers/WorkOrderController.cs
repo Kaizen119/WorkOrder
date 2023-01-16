@@ -40,5 +40,14 @@ namespace server.Controllers{
         }
         return Ok(response);
     }
+
+    [HttpDelete("{id}")]
+        public async Task<ActionResult<ServiceResponse<GetWorkOrderResponseDto>>> DeleteWorkOrder(int id){
+            var response = await _workOrderService.DeleteWorkOrder(id);
+        if (response.Data is null){
+            return NotFound(response);
+        }
+        return Ok(response);
+        }
     }
 }
