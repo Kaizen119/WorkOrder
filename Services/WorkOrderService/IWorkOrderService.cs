@@ -9,6 +9,7 @@ namespace server.Services.WorkOrderService{
 
         Task<ServiceResponse<List<GetWorkOrderResponseDto>>> GetAllWorkOrders();
         Task<ServiceResponse<GetWorkOrderResponseDto>> GetWorkOrderById(int id);
+        // Task<ServiceResponse<GetWorkOrderStatusResponseDto>> GetWorkOrderByStatus(string status);
         Task<ServiceResponse<List<GetWorkOrderResponseDto>>> AddWorkOrder(AddWorkOrderRequestDto newWorkOrder);
         Task<ServiceResponse<GetWorkOrderResponseDto>> UpdateWorkOrder(UpdateWorkOrderRequestDto updatedWorkOrder);
         Task<ServiceResponse<List<GetWorkOrderResponseDto>>> DeleteWorkOrder(int id);

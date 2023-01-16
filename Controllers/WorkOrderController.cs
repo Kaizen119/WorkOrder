@@ -21,6 +21,11 @@ namespace server.Controllers{
         public async Task<ActionResult<ServiceResponse<List<GetWorkOrderResponseDto>>>> Get(){
             return Ok(await _workOrderService.GetAllWorkOrders());
         }
+    
+    // [HttpGet("GetAll/{status}")]
+    // public async Task<ActionResult<ServiceResponse<List<GetWorkOrderStatusResponseDto>>>> GetStatus(string status){
+    // return Ok(await _workOrderService.GetWorkOrderByStatus(status));
+    // }
 
     [HttpGet("{id}")]
         public async Task<ActionResult<ServiceResponse<GetWorkOrderResponseDto>>> GetSingle(int id){

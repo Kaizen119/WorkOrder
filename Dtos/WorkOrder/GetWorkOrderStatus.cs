@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace server.Dtos.WorkOrder{
-    public class GetWorkOrderResponseDto{
+    public class GetWorkOrderStatusResponseDto{
         public int WONum { get; set; }
         public string? Email { get; set; }  
         public string? Status { get; set; }

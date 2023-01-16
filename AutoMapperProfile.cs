@@ -11,6 +11,10 @@ namespace server{
             CreateMap<WorkOrder,GetWorkOrderResponseDto>();
             CreateMap<AddWorkOrderRequestDto,WorkOrder>();
             CreateMap<UpdateWorkOrderRequestDto, WorkOrder>();
+            CreateMap<Technician,GetTechnicianResponseDto>();
+            CreateMap<AddTechnicianRequestDto,Technician>();
+            CreateMap<UpdateTechnicianRequestDto, Technician>();
+            CreateMap<Technician,GetTechnicianResponseDto>();
         }
     }
 }
