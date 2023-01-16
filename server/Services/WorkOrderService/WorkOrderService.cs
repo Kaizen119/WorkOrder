@@ -2,42 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace server.Services.WorkOrderService{
 
     public class WorkOrderService : IWorkOrderService
     {
-        private static List<WorkOrder> workOrders = new List<WorkOrder>{
-            new WorkOrder(),
-            new WorkOrder{
-                WONum = 1,
-                Email = "iamtheknight@gmail.com",
-                Status = "Open",
-                DateReceived = DateTime.Now,
-                DateAssigned = null,
-                DateComplete = null,
-                ContactName = "Bruce",
-                TechnicianId = 2,
-                Problem = "The bat computer is broken"
-            },
-            new WorkOrder{
-                WONum = 2,
-                Email = "supes@gmail.com",
-                Status = "Open",
-                DateReceived = DateTime.Now,
-                DateAssigned = null,
-                DateComplete = null,
-                ContactName = "Clark",
-                TechnicianId = 3,
-                Problem = "I cant get into the fortress of solitude"
-            }
-        };
-
-
         private readonly IMapper _mapper;
-        public WorkOrderService(IMapper mapper)
+
+        private readonly DataContext _context;
+        public WorkOrderService(IMapper mapper, DataContext context)
         {
+            _context = context;
             _mapper = mapper;
         }
 
@@ -46,9 +22,9 @@ namespace server.Services.WorkOrderService{
         {
             var serviceResponse = new ServiceResponse<List<GetWorkOrderResponseDto>>();
             var workOrder = _mapper.Map<WorkOrder>(newWorkOrder);
-            workOrder.WONum = workOrders.Max(wo => wo.WONum) +1;
-            workOrders.Add(workOrder);
-            serviceResponse.Data = workOrders.Select(wo => _mapper.Map<GetWorkOrderResponseDto>(wo)).ToList();
+            _context.WorkOrders.Add(workOrder);
+            await _context.SaveChangesAsync();
+            serviceResponse.Data = await _context.WorkOrders.Select(wo => _mapper.Map<GetWorkOrderResponseDto>(wo)).ToListAsync();
         return serviceResponse;
         }
 
@@ -56,13 +32,15 @@ namespace server.Services.WorkOrderService{
         {
             var serviceResponse = new ServiceResponse<List<GetWorkOrderResponseDto>>();
             try{
-            var workOrder = workOrders.FirstOrDefault(wo => wo.WONum == id);
+            var workOrder = await _context.WorkOrders.FirstOrDefaultAsync(wo => wo.WONum == id);
             if(workOrder is null)
                 throw new Exception($"Work Order with Work Order Number '{id}' not found.");
             
-            workOrders.Remove(workOrder);
+            _context.WorkOrders.Remove(workOrder);
 
-            serviceResponse.Data = workOrders.Select(wo => _mapper.Map<GetWorkOrderResponseDto>(wo)).ToList();
+            await _context.SaveChangesAsync();
+
+            serviceResponse.Data = await _context.WorkOrders.Select(wo => _mapper.Map<GetWorkOrderResponseDto>(wo)).ToListAsync();
 
             }catch (Exception ex) {
                 serviceResponse.Success = false;
@@ -75,7 +53,8 @@ namespace server.Services.WorkOrderService{
         public async Task<ServiceResponse<List<GetWorkOrderResponseDto>>> GetAllWorkOrders()
         {
             var serviceResponse = new ServiceResponse<List<GetWorkOrderResponseDto>>();
-            serviceResponse.Data = workOrders.Select(wo => _mapper.Map<GetWorkOrderResponseDto>(wo)).ToList();
+            var dbWorkOrders = await _context.WorkOrders.ToListAsync();
+            serviceResponse.Data = dbWorkOrders.Select(wo => _mapper.Map<GetWorkOrderResponseDto>(wo)).ToList();
             return serviceResponse;
         }
 
@@ -83,8 +62,8 @@ namespace server.Services.WorkOrderService{
         {
             var serviceResponse = new ServiceResponse<GetWorkOrderResponseDto>();
 
-            var workOrder = workOrders.FirstOrDefault(wo => wo.WONum == id);
-            serviceResponse.Data =  _mapper.Map<GetWorkOrderResponseDto>(workOrder);
+            var dbWorkOrder = await _context.WorkOrders.FirstOrDefaultAsync(wo => wo.WONum == id);
+            serviceResponse.Data =  _mapper.Map<GetWorkOrderResponseDto>(dbWorkOrder);
             return serviceResponse;
 
         }
@@ -93,7 +72,7 @@ namespace server.Services.WorkOrderService{
         {
             var serviceResponse = new ServiceResponse<GetWorkOrderResponseDto>();
             try{
-            var workOrder = workOrders.FirstOrDefault(wo => wo.WONum == updatedWorkOrder.WONum);
+            var workOrder = await _context.WorkOrders.FirstOrDefaultAsync(wo => wo.WONum == updatedWorkOrder.WONum);
             if(workOrder is null)
                 throw new Exception($"Work Order with Work Order Number '{updatedWorkOrder.WONum}' not found.");
             _mapper.Map(updatedWorkOrder, workOrder);
@@ -106,9 +85,9 @@ namespace server.Services.WorkOrderService{
             workOrder.ContactName = updatedWorkOrder.ContactName;
             workOrder.TechnicianComments = updatedWorkOrder.TechnicianComments;
             workOrder.ContactNumber = updatedWorkOrder.ContactNumber;
-            workOrder.TechnicianId = updatedWorkOrder.TechnicianId;
             workOrder.Problem = updatedWorkOrder.Problem;
 
+            await _context.SaveChangesAsync();
             serviceResponse.Data = _mapper.Map<GetWorkOrderResponseDto>(workOrder);
 
             }catch (Exception ex) {
