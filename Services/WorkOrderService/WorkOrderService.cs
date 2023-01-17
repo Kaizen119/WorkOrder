@@ -68,6 +68,21 @@ namespace server.Services.WorkOrderService{
 
         }
 
+        // public async Task<ServiceResponse<GetWorkOrderResponseDto>> GetStatus(string status)
+        // {
+        //     var serviceResponse = new ServiceResponse<List<GetWorkOrderResponseDto>>();
+        //     var dbWorkOrders = await _context.WorkOrders.ToListAsync();
+        //     serviceResponse.Data = await _context.WorkOrders
+        //     .Where(s => s.Status == GetStatus(status))
+        //     .Select(s => _mapper.Map<GetWorkOrderStatusResponseDto>()).ToListAsync();
+        //     return serviceResponse;
+        // }
+
+        public async Task<IEnumerable<WorkOrder>> GetWorkOrderByStatus(string status)
+    {
+        return await _context.WorkOrders.Where(wo => wo.Status == status).ToListAsync();
+    }
+
         public async Task<ServiceResponse<GetWorkOrderResponseDto>> UpdateWorkOrder(UpdateWorkOrderRequestDto updatedWorkOrder)
         {
             var serviceResponse = new ServiceResponse<GetWorkOrderResponseDto>();
