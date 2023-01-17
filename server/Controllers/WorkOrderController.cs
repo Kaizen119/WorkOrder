@@ -22,10 +22,17 @@ namespace server.Controllers{
             return Ok(await _workOrderService.GetAllWorkOrders());
         }
     
-    // [HttpGet("GetAll/{status}")]
-    // public async Task<ActionResult<ServiceResponse<List<GetWorkOrderStatusResponseDto>>>> GetStatus(string status){
-    // return Ok(await _workOrderService.GetWorkOrderByStatus(status));
-    // }
+    [HttpGet("GetAll/{status}")]
+    public async Task<IActionResult> GetWorkOrdersByStatus(string status)
+    {
+        var workOrders = await _workOrderService.GetWorkOrderByStatus(status);
+        if (workOrders == null)
+        {
+            return NotFound();
+        }
+        return Ok(workOrders);
+    }
+
 
     [HttpGet("{id}")]
         public async Task<ActionResult<ServiceResponse<GetWorkOrderResponseDto>>> GetSingle(int id){
