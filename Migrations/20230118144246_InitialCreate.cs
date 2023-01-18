@@ -17,8 +17,8 @@ namespace server.Migrations
                 {
                     TechnicianID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TechnicianName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TechnicianEmail = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    TechnicianName = table.Column<string>(type: "nvarchar(30)", nullable: false),
+                    TechnicianEmail = table.Column<string>(type: "nvarchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,15 +31,15 @@ namespace server.Migrations
                 {
                     WONum = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateReceived = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DateAssigned = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DateComplete = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ContactName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TechnicianComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Problem = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(20)", nullable: true),
+                    DateReceived = table.Column<DateTime>(type: "datetime", nullable: true),
+                    DateAssigned = table.Column<DateTime>(type: "datetime", nullable: true),
+                    DateComplete = table.Column<DateTime>(type: "datetime", nullable: true),
+                    ContactName = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    TechnicianComments = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
+                    ContactNumber = table.Column<string>(type: "nvarchar(25)", nullable: true),
+                    Problem = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
                     TechnicianID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

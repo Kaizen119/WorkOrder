@@ -10,3 +10,5 @@ namespace server.Dtos.Technician{
     public string TechnicianEmail { get; set; } = "required";
     }
 }
+
+// DTOs to separate domain objects from the presentation layer.

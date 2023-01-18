@@ -15,5 +15,7 @@ namespace server.Dtos.WorkOrder{
         public string? TechnicianComments { get; set; }
         public string? ContactNumber { get; set; }
         public string? Problem { get; set; }
+        public int? TechnicianID { get; set; }
     }
 }
+

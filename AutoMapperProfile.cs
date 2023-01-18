@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace server{
     public class AutoMapperProfile : Profile{
 
+//all maps for the methods to dtos
         public AutoMapperProfile()
         {
             CreateMap<WorkOrder,GetWorkOrderResponseDto>();

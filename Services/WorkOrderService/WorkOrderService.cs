@@ -11,14 +11,17 @@ namespace server.Services.WorkOrderService{
         private readonly IMapper _mapper;
 
         private readonly DataContext _context;
+
+//pulling in context and mapper
         public WorkOrderService(IMapper mapper, DataContext context)
         {
             _context = context;
             _mapper = mapper;
         }
 
+//logic for adding a work order to the DB 
 
-        public async Task<ServiceResponse<List<GetWorkOrderResponseDto>>> AddWorkOrder(AddWorkOrderRequestDto newWorkOrder)
+    public async Task<ServiceResponse<List<GetWorkOrderResponseDto>>> AddWorkOrder(AddWorkOrderRequestDto newWorkOrder)
         {
             var serviceResponse = new ServiceResponse<List<GetWorkOrderResponseDto>>();
             var workOrder = _mapper.Map<WorkOrder>(newWorkOrder);
@@ -27,7 +30,19 @@ namespace server.Services.WorkOrderService{
             serviceResponse.Data = await _context.WorkOrders.Select(wo => _mapper.Map<GetWorkOrderResponseDto>(wo)).ToListAsync();
         return serviceResponse;
         }
+    //     public async Task<ServiceResponse<List<GetWorkOrderResponseDto>>> AddWorkOrder(AddWorkOrderRequestDto newWorkOrder)
+    // {
+    //     var serviceResponse = new ServiceResponse<List<GetWorkOrderResponseDto>>();
+    //     var workOrder = _mapper.Map<WorkOrder>(newWorkOrder);
+    //     var technician = await _context.Technicians.FindAsync(newWorkOrder.TechnicianId);
+    //     workOrder.Class = technician;
+    //     _context.WorkOrders.Add(workOrder);
+    //     await _context.SaveChangesAsync();
+    //     serviceResponse.Data = await _context.WorkOrders.Select(wo => _mapper.Map<GetWorkOrderResponseDto>(wo)).ToListAsync();
+    //     return serviceResponse;
+    // }
 
+//logic to remove a workorder from the DB
         public async Task<ServiceResponse<List<GetWorkOrderResponseDto>>> DeleteWorkOrder(int id)
         {
             var serviceResponse = new ServiceResponse<List<GetWorkOrderResponseDto>>();
@@ -46,10 +61,12 @@ namespace server.Services.WorkOrderService{
                 serviceResponse.Success = false;
                 serviceResponse.Message = ex.Message;
             }
+            Console.WriteLine(serviceResponse);
             return serviceResponse;
 
         }
 
+//logic to fetch all work orders from the DB
         public async Task<ServiceResponse<List<GetWorkOrderResponseDto>>> GetAllWorkOrders()
         {
             var serviceResponse = new ServiceResponse<List<GetWorkOrderResponseDto>>();
@@ -58,6 +75,7 @@ namespace server.Services.WorkOrderService{
             return serviceResponse;
         }
 
+//logic to fetch one work order by id from the DB
         public async Task<ServiceResponse<GetWorkOrderResponseDto>> GetWorkOrderById(int id)
         {
             var serviceResponse = new ServiceResponse<GetWorkOrderResponseDto>();
@@ -68,21 +86,13 @@ namespace server.Services.WorkOrderService{
 
         }
 
-        // public async Task<ServiceResponse<GetWorkOrderResponseDto>> GetStatus(string status)
-        // {
-        //     var serviceResponse = new ServiceResponse<List<GetWorkOrderResponseDto>>();
-        //     var dbWorkOrders = await _context.WorkOrders.ToListAsync();
-        //     serviceResponse.Data = await _context.WorkOrders
-        //     .Where(s => s.Status == GetStatus(status))
-        //     .Select(s => _mapper.Map<GetWorkOrderStatusResponseDto>()).ToListAsync();
-        //     return serviceResponse;
-        // }
-
+//logic to fetch one work order by status from the DB 
         public async Task<IEnumerable<WorkOrder>> GetWorkOrderByStatus(string status)
     {
         return await _context.WorkOrders.Where(wo => wo.Status == status).ToListAsync();
     }
 
+//logic to update one work order in the DB
         public async Task<ServiceResponse<GetWorkOrderResponseDto>> UpdateWorkOrder(UpdateWorkOrderRequestDto updatedWorkOrder)
         {
             var serviceResponse = new ServiceResponse<GetWorkOrderResponseDto>();
