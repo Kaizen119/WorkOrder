@@ -1,44 +1,24 @@
+import React from 'react'
 import './App.css';
+import {Routes, Route, Navigate} from 'react-router-dom'
+import Dashboard from './views/Dashboard';
+
 
 function App() {
   return (
-    <div className="App">
-      <>
-          <div class="container">
-          <table class="table caption-top">
-          <caption>List of Work Orders</caption>
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </>
+  <div className="App">
+    <Routes>
+      <Route path='/dashboard' element={<Dashboard />}/>
+
+
+      {/* Redirect */}
+      <Route path='*' element={<Navigate to="/dashboard" replace/>}/>
+    </Routes>
   </div>
   );
 }
+
+
+
 
 export default App;
