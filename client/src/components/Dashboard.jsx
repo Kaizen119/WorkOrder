@@ -84,6 +84,7 @@ const Dashboard = (props) => {
 
 // function to open/close the modal
     function openModal() {
+        setStatus("open");
         setIsOpen(true);
     }
     function closeModal(){
