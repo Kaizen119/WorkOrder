@@ -17,3 +17,5 @@ namespace server.Dtos.WorkOrder{
         public string? Problem { get; set; }
     }
 }
+
+// DTOs to separate domain objects from the presentation layer.

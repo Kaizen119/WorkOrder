@@ -32,11 +32,11 @@ namespace server.Migrations
 
                     b.Property<string>("TechnicianEmail")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("TechnicianName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("TechnicianID");
 
@@ -52,31 +52,31 @@ namespace server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WONum"));
 
                     b.Property<string>("ContactName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ContactNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<DateTime?>("DateAssigned")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime?>("DateComplete")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime?>("DateReceived")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Problem")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(MAX)");
 
                     b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("TechnicianComments")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(MAX)");
 
                     b.Property<int?>("TechnicianID")
                         .HasColumnType("int");

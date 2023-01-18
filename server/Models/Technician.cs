@@ -11,3 +11,5 @@ public class Technician{
     public string TechnicianEmail { get; set; } = "required";
     public List<WorkOrder>? WorkOrders { get; set; }
 }
+
+//model for creating a new tech 

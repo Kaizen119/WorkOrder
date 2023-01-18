@@ -11,11 +11,15 @@ namespace server.Services.TechnicianService{
         private readonly IMapper _mapper;
 
         private readonly DataContext _context;
+
+// pulling in our context and mapper
         public TechnicianService(IMapper mapper, DataContext context)
         {
             _context = context;
             _mapper = mapper;
         }
+
+//logic for adding a tech from the DB 
         public async Task<ServiceResponse<List<GetTechnicianResponseDto>>> AddTechnician(AddTechnicianRequestDto newTechnician)
         {
             var serviceResponse = new ServiceResponse<List<GetTechnicianResponseDto>>();
@@ -25,6 +29,8 @@ namespace server.Services.TechnicianService{
             serviceResponse.Data = await _context.Technicians.Select(wo => _mapper.Map<GetTechnicianResponseDto>(wo)).ToListAsync();
         return serviceResponse;
         }
+
+//logic for removing a tech from the DB 
         public async Task<ServiceResponse<List<GetTechnicianResponseDto>>> DeleteTechnician(int id)
         {
             var serviceResponse = new ServiceResponse<List<GetTechnicianResponseDto>>();
@@ -46,6 +52,8 @@ namespace server.Services.TechnicianService{
             return serviceResponse;
 
         }
+    
+//logic for fetching all techs from the DB 
         public async Task<ServiceResponse<List<GetTechnicianResponseDto>>> GetAllTechnicians()
         {
             var serviceResponse = new ServiceResponse<List<GetTechnicianResponseDto>>();
@@ -53,6 +61,8 @@ namespace server.Services.TechnicianService{
             serviceResponse.Data = dbTechnicians.Select(t => _mapper.Map<GetTechnicianResponseDto>(t)).ToList();
             return serviceResponse;
         }
+
+//logic for fetching one tech by id from the DB
         public async Task<ServiceResponse<GetTechnicianResponseDto>> GetTechnicianById(int id)
         {
             var serviceResponse = new ServiceResponse<GetTechnicianResponseDto>();
@@ -61,6 +71,8 @@ namespace server.Services.TechnicianService{
             serviceResponse.Data =  _mapper.Map<GetTechnicianResponseDto>(dbTechnician);
             return serviceResponse;
         }
+
+//logic for updating one tech to the DB
         public async Task<ServiceResponse<GetTechnicianResponseDto>> UpdateTechnician(UpdateTechnicianRequestDto updatedTechnician)
         {
             var serviceResponse = new ServiceResponse<GetTechnicianResponseDto>();
